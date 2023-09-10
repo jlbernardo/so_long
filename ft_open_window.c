@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/09 15:11:05 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/09 22:21:02 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ mlx_t	*ft_open_window(t_map *map)
 	}
 	assets = ft_calloc(1, sizeof(t_asset));
 	assets = ft_load(map, mlx, assets);
-//	ft_mechanics(mlx, assets);
+	ft_mechanics(mlx, assets);
 	return (mlx);
 }
 
@@ -71,13 +71,13 @@ t_asset	*ft_place(t_map *map, mlx_t *mlx, t_asset *asset, int32_t i)
 				asset->img[i++] = mlx_image_to_window(mlx, asset->forest, x, y);
 			else if (map->map[y / WALL_SIZE][x / WALL_SIZE] == 'C')
 			{
-				asset->img[i++] = mlx_image_to_window(mlx, asset->diamond, x + 45, y + 45);
+				asset->img[i++] = mlx_image_to_window(mlx, asset->diamond, x + 52, y + 60);
 				asset->collectibles++;
 			}
 			else if (map->map[y / WALL_SIZE][x / WALL_SIZE] == 'P')
 				asset->img[i++] = mlx_image_to_window(mlx, asset->dino, x + 45, y + 45);
 			else if (map->map[y / WALL_SIZE][x / WALL_SIZE] == 'E')
-				asset->img[i++] = mlx_image_to_window(mlx, asset->portal, x + 35, y + 25);
+				asset->img[i++] = mlx_image_to_window(mlx, asset->portal, x + 42, y + 25);
 			y += 110;
 		}
 		x += 113;

@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/09 15:03:41 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/09 21:31:54 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ typedef struct s_map
 	int32_t	x;
 }				t_map;
 
-//void		ft_mechanics(mlx_t *mlx, t_asset *assets);
+typedef struct s_all
+{
+	mlx_t		*mlx;
+	t_map		*map;
+	t_essential	*essential;
+	t_asset		*assets;
+}				t_all;
+
+void		ft_mechanics(mlx_t *mlx, t_asset *assets);
 t_map		*ft_create_matrix(int fd);
 mlx_t		*ft_open_window(t_map *map);
 int32_t		ft_count_lines(char *map);

@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/09 21:31:54 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/10 23:55:02 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ typedef struct s_asset
 	mlx_texture_t	*t_background;
 	mlx_image_t		*background;
 	int32_t			collectibles;
-	int32_t			img[1024];
+	int32_t			i_forest[1024];
+	int32_t			i_diamond[1024];
 }				t_asset;
 
 typedef struct s_essential
@@ -58,6 +59,12 @@ typedef struct s_all
 	t_asset		*assets;
 }				t_all;
 
+typedef struct s_temp
+{
+	int32_t	x;
+	int32_t	y;
+}				t_temp;
+
 void		ft_mechanics(mlx_t *mlx, t_asset *assets);
 t_map		*ft_create_matrix(int fd);
 mlx_t		*ft_open_window(t_map *map);
@@ -65,6 +72,7 @@ int32_t		ft_count_lines(char *map);
 int32_t		ft_check_map_validity(char *file, t_map **map);
 int32_t		ft_check_boundary(t_map *map, t_essential item, int x, int y);
 t_asset		*ft_load(t_map *map, mlx_t *mlx, t_asset *assets);
-t_asset		*ft_place(t_map *map, mlx_t *mlx, t_asset *assets, int32_t i);
+t_asset		*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets);
+t_asset		*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp temp);
 
 #endif

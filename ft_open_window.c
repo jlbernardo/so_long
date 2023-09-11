@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/10 23:55:45 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:21:42 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,47 +56,50 @@ t_asset	*ft_load(t_map *map, mlx_t *mlx, t_asset *assets)
 	return (assets);
 }
 
-t_asset	*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp temp)
+t_asset	*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp *temp)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
 	if (pos == '1')
-		assets->i_forest[i++] = mlx_image_to_window(mlx, \
-									assets->forest, temp.x, temp.y);
+	{
+		assets->i_forest[temp->i] = mlx_image_to_window(mlx, \
+							assets->forest, temp->x, temp->y);
+		temp->i++;
+	}
 	else if (pos == 'C')
 	{
-		temp.x += 52;
-		temp.y += 60;
-		assets->i_diamond[j++] = mlx_image_to_window(mlx, \
-									assets->diamond, temp.x, temp.y);
+		assets->i_diamond[temp->j] = mlx_image_to_window(mlx, \
+			assets->diamond, temp->x + 52, temp->y + 60);
 		assets->collectibles++;
+		temp->j++;
 	}
 	else if (pos == 'P')
-		mlx_image_to_window(mlx, assets->dino, temp.x + 45, temp.y + 45);
+	{
+		mlx_image_to_window(mlx, assets->dino, temp->x + 45, temp->y + 45);
+		assets->dino->instances->z = 1;
+	}
 	else if (pos == 'E')
-		mlx_image_to_window(mlx, assets->portal, temp.x + 42, temp.y + 25);
+		mlx_image_to_window(mlx, assets->portal, temp->x + 42, temp->y + 25);
 	return (assets);
 }
 
 t_asset	*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets)
 {
-	t_temp	temp;
+	t_temp	*temp;
 
-	temp.x = 0;
-	while (temp.x < map->x * WALL_SIZE)
+	temp = ft_calloc(1, sizeof(t_temp));
+	temp->x = 0;
+	temp->i = 0;
+	temp->j = 0;
+	while (temp->x < map->x * WALL_SIZE)
 	{
-		temp.y = 0;
-		while (temp.y < map->y * WALL_SIZE)
+		temp->y = 0;
+		while (temp->y < map->y * WALL_SIZE)
 		{
-			assets = ft_place_2(map->map[temp.y / WALL_SIZE] \
-					[temp.x / WALL_SIZE], assets, mlx, temp);
-			temp.y += 110;
+			assets = ft_place_2(map->map[temp->y / WALL_SIZE] \
+					[temp->x / WALL_SIZE], assets, mlx, temp);
+			temp->y += 110;
 		}
-		temp.x += 113;
+		temp->x += 113;
 	}
-//	assets->portal->enabled = false;
+//	assets->diamond->instances[0].enabled = false;
 	return (assets);
 }

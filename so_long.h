@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/10 23:55:02 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:06:52 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,15 @@ typedef struct s_all
 	t_map		*map;
 	t_essential	*essential;
 	t_asset		*assets;
+	int32_t		moves;
 }				t_all;
 
 typedef struct s_temp
 {
 	int32_t	x;
 	int32_t	y;
+	int32_t	i;
+	int32_t	j;
 }				t_temp;
 
 void		ft_mechanics(mlx_t *mlx, t_asset *assets);
@@ -73,6 +76,6 @@ int32_t		ft_check_map_validity(char *file, t_map **map);
 int32_t		ft_check_boundary(t_map *map, t_essential item, int x, int y);
 t_asset		*ft_load(t_map *map, mlx_t *mlx, t_asset *assets);
 t_asset		*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets);
-t_asset		*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp temp);
+t_asset		*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp *temp);
 
 #endif

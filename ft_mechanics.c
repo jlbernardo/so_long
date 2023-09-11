@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/11 20:09:11 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/11 20:23:21 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int32_t	ft_validate_horizontal(int32_t direction, t_all *data)
 			return (false);
 		i++;
 	}
+	ft_printf("Moves: %d\n", ++data->moves);
 	return (true);
 }
 
@@ -61,6 +62,7 @@ int32_t	ft_validate_vertical(int32_t direction, t_all *data)
 			return (false);
 		i++;
 	}
+	ft_printf("Moves: %d\n", ++data->moves);
 	return (true);
 }
 

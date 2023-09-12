@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/11 20:06:52 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:32:10 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_all
 	t_essential	*essential;
 	t_asset		*assets;
 	int32_t		moves;
+	size_t		d_collected;
 }				t_all;
 
 typedef struct s_temp

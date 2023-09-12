@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/11 20:23:21 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:43:09 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int32_t	ft_validate_horizontal(int32_t direction, t_all *data)
 {
-	int	i;
-	int	dino_x;
-	int	dino_y;
-	int	forest_x;
-	int	forest_y;
+	size_t	i;
+	int32_t	dino_x;
+	int32_t	dino_y;
+	int32_t	forest_x;
+	int32_t	forest_y;
 
 	i = 0;
 	dino_y = data->assets->dino->instances->y;
@@ -41,11 +41,11 @@ int32_t	ft_validate_horizontal(int32_t direction, t_all *data)
 
 int32_t	ft_validate_vertical(int32_t direction, t_all *data)
 {
-	int	i;
-	int	dino_x;
-	int	dino_y;
-	int	forest_x;
-	int	forest_y;
+	size_t	i;
+	int32_t	dino_x;
+	int32_t	dino_y;
+	int32_t	forest_x;
+	int32_t	forest_y;
 
 	i = 0;
 	dino_x = data->assets->dino->instances->x;
@@ -53,7 +53,7 @@ int32_t	ft_validate_vertical(int32_t direction, t_all *data)
 		dino_y = data->assets->dino->instances->y - 110;
 	else if (direction == MLX_KEY_DOWN || direction == MLX_KEY_S)
 		dino_y = data->assets->dino->instances->y + 110;
-	while (data->assets->forest->instances[i].enabled != false)
+	while (i <= data->assets->forest->count)
 	{
 		forest_x = data->assets->forest->instances[i].x;
 		forest_y = data->assets->forest->instances[i].y;
@@ -66,26 +66,55 @@ int32_t	ft_validate_vertical(int32_t direction, t_all *data)
 	return (true);
 }
 
-void	ft_hooks(mlx_key_data_t keydata, t_all *param)
+void	ft_check_collection(t_all *data)
+{
+	size_t	i;
+	int32_t	dino_x;
+	int32_t	dino_y;
+	int32_t	diamond_x;
+	int32_t	diamond_y;
+
+	i = 0;
+	dino_x = data->assets->dino->instances->x;
+	dino_y = data->assets->dino->instances->y;
+	while (i <= data->assets->diamond->count)
+	{
+		diamond_x = data->assets->diamond->instances[i].x;
+		diamond_y = data->assets->diamond->instances[i].y;
+		if ((diamond_x > dino_x && diamond_y > dino_y) && \
+		(diamond_x < (dino_x + 46) && diamond_y < (dino_y + 46)) \
+		&& data->assets->diamond->instances[i].enabled == true)
+		{
+			data->assets->diamond->instances[i].enabled = false;
+			data->d_collected++;
+		}
+		i++;
+	}
+	if (data->d_collected == data->assets->diamond->count)
+		data->assets->portal->enabled = true;
+}
+
+void	ft_hooks(mlx_key_data_t keydata, t_all *data)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
-		mlx_close_window(param->mlx);
+		mlx_close_window(data->mlx);
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
 			&& keydata.action == MLX_PRESS && \
-			ft_validate_vertical(keydata.key, param))
-		param->assets->dino->instances->y -= 110;
+			ft_validate_vertical(keydata.key, data))
+		data->assets->dino->instances->y -= 110;
 	else if ((keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S) \
 			&& keydata.action == MLX_PRESS && \
-			ft_validate_vertical(keydata.key, param))
-		param->assets->dino->instances->y += 110;
+			ft_validate_vertical(keydata.key, data))
+		data->assets->dino->instances->y += 110;
 	else if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A) \
 			&& keydata.action == MLX_PRESS && \
-			ft_validate_horizontal(keydata.key, param))
-		param->assets->dino->instances->x -= 113;
+			ft_validate_horizontal(keydata.key, data))
+		data->assets->dino->instances->x -= 113;
 	else if ((keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D) \
 			&& keydata.action == MLX_PRESS && \
-			ft_validate_horizontal(keydata.key, param))
-		param->assets->dino->instances->x += 113;
+			ft_validate_horizontal(keydata.key, data))
+		data->assets->dino->instances->x += 113;
+	ft_check_collection(data);
 }
 
 void	ft_mechanics(mlx_t *mlx, t_asset *assets)
@@ -95,5 +124,6 @@ void	ft_mechanics(mlx_t *mlx, t_asset *assets)
 	all = ft_calloc(1, sizeof(t_all));
 	all->mlx = mlx;
 	all->assets = assets;
+	all->d_collected = 0;
 	mlx_key_hook(mlx, (void *)ft_hooks, (void *)all);
 }

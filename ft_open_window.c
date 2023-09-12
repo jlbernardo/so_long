@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/11 16:21:42 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:32:40 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ t_asset	*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets)
 		}
 		temp->x += 113;
 	}
-//	assets->diamond->instances[0].enabled = false;
+	assets->portal->enabled = false;
 	return (assets);
 }

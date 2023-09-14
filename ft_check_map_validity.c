@@ -6,103 +6,111 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/09 13:53:51 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:01:25 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int32_t	ft_check_map_validity(char *file, t_map **map)
+void	ft_check_map_validity(int argc, char *file, t_game **game)
 {
-	t_map		*temp_map;
-	int32_t		len;
-	t_essential	item;
+	int	i;
 
+	if (argc != 2)
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
 	if (!file)
-		return (ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
-	len = ft_strlen(file);
-	if (ft_strncmp(&file[len - 4], ".ber", 4) != 0)
-		return (ft_printf("%s.\n", mlx_strerror(MLX_INVEXT)));
-	temp_map = ft_create_matrix(open(file, O_RDONLY));
-	item.player = 0;
-	item.exit = 0;
-	item.collectible = 0;
-	if (ft_check_boundary(temp_map, item, 0, 0) != 0)
-		return (ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
-	if (temp_map->x <= 0 || temp_map->y <= 0)
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
+	i = ft_strlen(file);
+	if (ft_strncmp(&file[i - 4], ".ber", 4) != 0)
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVEXT)));
+	(*game) = ft_calloc(1, sizeof(t_game));
+	ft_count_lines(file, game);
+	(*game)->count = ft_calloc(1, sizeof(t_count));
+	(*game)->count->player = 0;
+	(*game)->count->exit = 0;
+	(*game)->count->collectible = 0;
+	ft_create_matrix(file, game);
+	if ((ft_validate_boundary(game, 0, 0) != 0) || \
+		(*game)->map->x <= 0 || (*game)->map->y <= 0 || \
+		(*game)->count->player != 1 || (*game)->count->exit != 1 || \
+		(*game)->count->collectible < 1 || (*game)->map->x == (*game)->map->y)
 	{
-		mlx_strerror(MLX_INVDIM);
-		exit(MLX_INVDIM);
+		i = (*game)->map->y - 1;
+		while (i >= 0)
+		{
+			free((*game)->map->map[i]);
+			i--;
+		}
+		free((*game)->map->map);
+		free((*game)->map);
+		free((*game)->count);
+		free((*game));
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
 	}
-	*map = temp_map;
-	return (MLX_SUCCESS);
 }
 
-t_map	*ft_create_matrix(int fd)
+void	ft_count_lines(char *file, t_game **game)
 {
-	char			*string;
-	char			*free_ptr;
-	t_map			*map;
+	int		fd;
+	char	*string;
 
+	fd = open(file, O_RDONLY);
 	string = get_next_line(fd);
-	map = ft_calloc(1, sizeof(t_map));
-	map->inline_map = ft_calloc(1, sizeof(char));
+	if (string)
+	{
+		(*game)->map = ft_calloc(1, sizeof(t_map));
+		(*game)->map->x = ft_strlen(string) - 1;
+	}
 	while (string != NULL)
 	{
-		free_ptr = map->inline_map;
-		map->inline_map = ft_strjoin(map->inline_map, string);
-		free(free_ptr);
-		free_ptr = string;
+		(*game)->map->y++;
+		free(string);
 		string = get_next_line(fd);
-		free(free_ptr);
 	}
-	map->map = ft_split(map->inline_map, '\n');
-	map->x = ft_strlen(map->map[0]);
-	map->y = ft_count_lines(map->inline_map);
 	free(string);
-	return (map);
+	close(fd);
 }
 
-int32_t	ft_check_boundary(t_map *map, t_essential item, int x, int y)
+void	ft_create_matrix(char *file, t_game **game)
 {
-	while (y < map->y)
+	int	i;
+	int	fd;
+
+	i = 0;
+	fd = open(file, O_RDONLY);
+	(*game)->map->map = ft_calloc((*game)->map->y, sizeof(char *));
+	while (i < (*game)->map->y)
+	{
+		(*game)->map->map[i] = get_next_line(fd);
+		(*game)->map->map[i][(*game)->map->x] = '\0';
+		i++;
+	}
+}
+
+int	ft_validate_boundary(t_game **game, int x, int y)
+{
+	while (y < (*game)->map->y)
 	{
 		x = 0;
-		while (x < map->x)
+		while (x < (*game)->map->x)
 		{
-			if (map->map[0][x] != '1' ||
-				map->map[y][0] != '1' ||
-				map->map[y][map->x - 1] != '1' ||
-				map->map[map->y - 1][x] != '1')
+			if ((*game)->map->map[y][0] != '1' || (*game)->map->map[0][x] != '1'
+				|| (*game)->map->map[y][(*game)->map->x - 1] != '1' ||
+				(*game)->map->map[(*game)->map->y - 1][x] != '1')
 				return (MLX_INVFILE);
-			if (map->map[y][x] == 'P')
-				item.player++;
-			else if (map->map[y][x] == 'E')
-				item.exit++;
-			else if (map->map[y][x] == 'C')
-				item.collectible++;
+			if ((*game)->map->map[y][x] == 'P')
+			{
+				(*game)->count->player++;
+				(*game)->count->p_init_x = x;
+				(*game)->count->p_init_y = y;
+			}
+			else if ((*game)->map->map[y][x] == 'E')
+				(*game)->count->exit++;
+			else if ((*game)->map->map[y][x] == 'C')
+				(*game)->count->collectible++;
 			x++;
 		}
 		y++;
 	}
-	if (item.player != 1 || item.exit != 1 || \
-		item.collectible < 1 || map->x == map->y)
-		return (MLX_INVFILE);
 	return (MLX_SUCCESS);
-}
-
-int32_t	ft_count_lines(char *map)
-{
-	int32_t	lines;
-	int32_t	i;
-
-	i = 0;
-	lines = 0;
-	while (map[i] != '\0')
-	{
-		if (map[i] == '\n')
-			lines++;
-		i++;
-	}
-	return (lines);
 }

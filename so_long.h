@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/12 14:32:10 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:35:13 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,53 @@ typedef struct s_asset
 	mlx_image_t		*portal;
 	mlx_texture_t	*t_background;
 	mlx_image_t		*background;
-	int32_t			collectibles;
-	int32_t			i_forest[1024];
-	int32_t			i_diamond[1024];
+	int				i_forest[1024];
+	int				i_diamond[1024];
 }				t_asset;
 
-typedef struct s_essential
+typedef struct s_count
 {
-	int32_t	player;
-	int32_t	exit;
-	int32_t	collectible;
-}				t_essential;
+	int		player;
+	int		exit;
+	int		collectible;
+	int		p_init_x;
+	int		p_init_y;
+	int		collectable;
+	bool	escapable;
+}				t_count;
 
 typedef struct s_map
 {
 	char	**map;
-	char	*inline_map;
-	int32_t	y;
-	int32_t	x;
+	int		y;
+	int		x;
 }				t_map;
 
-typedef struct s_all
+typedef struct s_game
 {
+	int			moves;
 	mlx_t		*mlx;
 	t_map		*map;
-	t_essential	*essential;
+	t_count		*count;
 	t_asset		*assets;
-	int32_t		moves;
 	size_t		d_collected;
-}				t_all;
+}				t_game;
 
-typedef struct s_temp
-{
-	int32_t	x;
-	int32_t	y;
-	int32_t	i;
-	int32_t	j;
-}				t_temp;
-
-void		ft_mechanics(mlx_t *mlx, t_asset *assets);
-t_map		*ft_create_matrix(int fd);
-mlx_t		*ft_open_window(t_map *map);
-int32_t		ft_count_lines(char *map);
-int32_t		ft_check_map_validity(char *file, t_map **map);
-int32_t		ft_check_boundary(t_map *map, t_essential item, int x, int y);
-t_asset		*ft_load(t_map *map, mlx_t *mlx, t_asset *assets);
-t_asset		*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets);
-t_asset		*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp *temp);
+void		ft_load(t_game **game);
+void		ft_close(t_game **game);
+void		ft_place_1(t_game **game);
+void		ft_mechanics(t_game **game);
+void		ft_open_window(t_game **game);
+void		ft_check_collection(t_game **game);
+void		ft_flood(t_game **game, int x, int y);
+void		ft_count_lines(char *file, t_game **game);
+void		ft_create_matrix(char *file, t_game **game);
+void		ft_hooks(mlx_key_data_t keydata, t_game **game);
+void		ft_place_2(char pos, t_game **game, int x, int y);
+void		ft_check_map_validity(int argc, char *file, t_game **game);
+void		ft_check_ending(int dino_x, int dino_y, t_game **game);
+int			ft_validate_boundary(t_game **game, int x, int y);
+int			ft_validate_vertical(int direction, t_game **game);
+int			ft_validate_horizontal(int direction, t_game **game);
 
 #endif

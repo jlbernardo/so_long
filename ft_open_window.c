@@ -6,100 +6,87 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/12 14:32:40 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/14 14:08:15 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-mlx_t	*ft_open_window(t_map *map)
+void	ft_open_window(t_game **game)
 {
-	int32_t			height;
 	int32_t			width;
-	mlx_t			*mlx;
-	t_asset			*assets;
+	int32_t			height;
 
-	width = (map->x * 113) + 6;
-	height = (map->y * 110) + 10;
+	width = ((*game)->map->x * 113) + 6;
+	height = ((*game)->map->y * 110) + 10;
 	if (width > 1920)
 		width = 1920;
 	if (height > 1080)
 		height = 1080;
-	mlx = mlx_init(width, height, "so_long", false);
-	if (!mlx)
+	(*game)->mlx = mlx_init(width, height, "so_long", false);
+	if (!(*game)->mlx)
 	{
 		mlx_strerror(MLX_WINFAIL);
 		exit(MLX_WINFAIL);
 	}
-	assets = ft_calloc(1, sizeof(t_asset));
-	assets = ft_load(map, mlx, assets);
-	ft_mechanics(mlx, assets);
-	return (mlx);
+	(*game)->assets = ft_calloc(1, sizeof(t_asset));
+	ft_load(game);
 }
 
-t_asset	*ft_load(t_map *map, mlx_t *mlx, t_asset *assets)
+void	ft_load(t_game **game)
 {
-	assets->logo = mlx_load_png("./assets/logo.png");
-	assets->t_forest = mlx_load_png("./assets/forest.png");
-	assets->forest = mlx_texture_to_image(mlx, assets->t_forest);
-	assets->t_diamond = mlx_load_png("./assets/diamond.png");
-	assets->diamond = mlx_texture_to_image(mlx, assets->t_diamond);
-	assets->t_portal = mlx_load_png("./assets/portal.png");
-	assets->portal = mlx_texture_to_image(mlx, assets->t_portal);
-	assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
-	assets->dino = mlx_texture_to_image(mlx, assets->t_dino);
-	assets->t_background = mlx_load_png("./assets/bg.png");
-	assets->background = mlx_texture_to_image(mlx, assets->t_background);
-	mlx_set_icon(mlx, assets->logo);
-	mlx_image_to_window(mlx, assets->background, 0, 0);
-	ft_place_1(map, mlx, assets);
-	return (assets);
+	(*game)->assets->logo = mlx_load_png("./assets/logo.png");
+	(*game)->assets->t_forest = mlx_load_png("./assets/forest.png");
+	(*game)->assets->forest = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_forest);
+	(*game)->assets->t_diamond = mlx_load_png("./assets/diamond.png");
+	(*game)->assets->diamond = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_diamond);
+	(*game)->assets->t_portal = mlx_load_png("./assets/portal.png");
+	(*game)->assets->portal = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_portal);
+	(*game)->assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
+	(*game)->assets->dino = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_dino);
+	(*game)->assets->t_background = mlx_load_png("./assets/bg.png");
+	(*game)->assets->background = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_background);
+	mlx_set_icon((*game)->mlx, (*game)->assets->logo);
+	mlx_image_to_window((*game)->mlx, (*game)->assets->background, 0, 0);
+	ft_place_1(game);
 }
 
-t_asset	*ft_place_2(char pos, t_asset *assets, mlx_t *mlx, t_temp *temp)
+void	ft_place_1(t_game **game)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < (*game)->map->y * WALL_SIZE)
+	{
+		y = 0;
+		while (y < (*game)->map->x * WALL_SIZE)
+		{
+			ft_place_2((*game)->map->map[x / WALL_SIZE][y / WALL_SIZE], \
+								game, y, x);
+			y += 113;
+		}
+		x += 110;
+	}
+	(*game)->assets->portal->enabled = false;
+}
+
+void	ft_place_2(char pos, t_game **game, int x, int y)
 {
 	if (pos == '1')
-	{
-		assets->i_forest[temp->i] = mlx_image_to_window(mlx, \
-							assets->forest, temp->x, temp->y);
-		temp->i++;
-	}
+		mlx_image_to_window((*game)->mlx, (*game)->assets->forest, x, y);
 	else if (pos == 'C')
-	{
-		assets->i_diamond[temp->j] = mlx_image_to_window(mlx, \
-			assets->diamond, temp->x + 52, temp->y + 60);
-		assets->collectibles++;
-		temp->j++;
-	}
+		mlx_image_to_window((*game)->mlx, (*game)->assets->diamond, \
+							x + 52, y + 60);
 	else if (pos == 'P')
-	{
-		mlx_image_to_window(mlx, assets->dino, temp->x + 45, temp->y + 45);
-		assets->dino->instances->z = 1;
-	}
+		mlx_image_to_window((*game)->mlx, (*game)->assets->dino, \
+						x + 45, y + 45);
 	else if (pos == 'E')
-		mlx_image_to_window(mlx, assets->portal, temp->x + 42, temp->y + 25);
-	return (assets);
-}
-
-t_asset	*ft_place_1(t_map *map, mlx_t *mlx, t_asset *assets)
-{
-	t_temp	*temp;
-
-	temp = ft_calloc(1, sizeof(t_temp));
-	temp->x = 0;
-	temp->i = 0;
-	temp->j = 0;
-	while (temp->x < map->x * WALL_SIZE)
-	{
-		temp->y = 0;
-		while (temp->y < map->y * WALL_SIZE)
-		{
-			assets = ft_place_2(map->map[temp->y / WALL_SIZE] \
-					[temp->x / WALL_SIZE], assets, mlx, temp);
-			temp->y += 110;
-		}
-		temp->x += 113;
-	}
-	assets->portal->enabled = false;
-	return (assets);
+		mlx_image_to_window((*game)->mlx, (*game)->assets->portal, \
+						x + 42, y + 25);
 }

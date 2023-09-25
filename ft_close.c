@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 13:10:56 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:57:27 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_close(t_game **game, int err_code, int i)
 {
-	if (err_code <= 1)
+	if (err_code <= 2)
 	{
 		i = (*game)->map->y;
 		while (--i >= 0)
@@ -23,7 +23,7 @@ void	ft_close(t_game **game, int err_code, int i)
 		free((*game)->map);
 		free((*game)->count);
 	}
-	if (err_code <= 2)
+	if (err_code <= 1)
 	{
 		mlx_delete_image((*game)->mlx, (*game)->assets->background);
 		mlx_delete_image((*game)->mlx, (*game)->assets->forest);
@@ -38,7 +38,6 @@ void	ft_close(t_game **game, int err_code, int i)
 		mlx_delete_texture((*game)->assets->logo);
 		free((*game)->assets);
 	}
-	free((*game));
 }
 
 void	ft_check_ending(int dino_x, int dino_y, t_game **game)
@@ -55,6 +54,6 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 		&& (*game)->assets->portal->enabled == true)
 	{
 		mlx_close_window((*game)->mlx);
-		ft_close(game, 2, 0);
+		ft_close(game, 1, 0);
 	}
 }

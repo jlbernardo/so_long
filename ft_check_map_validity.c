@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 13:10:32 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:56:41 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVEXT)));
 	(*game) = ft_calloc(1, sizeof(t_game));
 	ft_count_lines(file, game);
-	(*game)->count = ft_calloc(1, sizeof(t_count));
-	(*game)->count->player = 0;
-	(*game)->count->exit = 0;
-	(*game)->count->collectible = 0;
 	ft_create_matrix(file, game);
 	if ((ft_validate_boundary(game, 0, 0) != 0) || \
 		(*game)->map->x <= 0 || (*game)->map->y <= 0 || \
-		(*game)->count->player != 1 || (*game)->count->exit != 1 || \
-		(*game)->count->collectible < 1 || (*game)->map->x == (*game)->map->y)
+		(*game)->count->player != 1 || (*game)->count->collectible < 1 || \
+		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y)
 	{
-		ft_close(game, 1, 0);
+		ft_close(game, 2, 0);
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
+	}
+	ft_flood(game, (*game)->count->p_init_x, (*game)->count->p_init_y);
+	if ((*game)->count->exit != true || \
+		(*game)->count->collectable != (*game)->count->collectible)
+	{
+		ft_close(game, 2, 0);
 		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
 	}
 }
@@ -76,6 +79,10 @@ void	ft_create_matrix(char *file, t_game **game)
 		(*game)->map->map[i][(*game)->map->x] = '\0';
 		i++;
 	}
+	(*game)->count = ft_calloc(1, sizeof(t_count));
+	(*game)->count->player = 0;
+	(*game)->count->exit = 0;
+	(*game)->count->collectible = 0;
 }
 
 int	ft_validate_boundary(t_game **game, int x, int y)
@@ -104,4 +111,29 @@ int	ft_validate_boundary(t_game **game, int x, int y)
 		y++;
 	}
 	return (MLX_SUCCESS);
+}
+
+void	ft_flood(t_game **game, int x, int y)
+{
+	if (x >= 0 && y >= 0 && y < (*game)->map->x && x < (*game)->map->y)
+	{
+		if ((*game)->map->map[x][y] == '1')
+			return ;
+		else if ((*game)->map->map[x][y] == '0')
+			(*game)->map->map[x][y] = 'x';
+		else if ((*game)->map->map[x][y] == 'C')
+		{
+			(*game)->count->collectable++;
+			(*game)->map->map[x][y] = 'c';
+		}
+		else if ((*game)->map->map[x][y] == 'E')
+		{
+			(*game)->count->escapable = true;
+			(*game)->map->map[x][y] = 'e';
+		}
+		ft_flood(game, x + 1, y);
+		ft_flood(game, x - 1, y);
+		ft_flood(game, x, y + 1);
+		ft_flood(game, x, y + 1);
+	}
 }

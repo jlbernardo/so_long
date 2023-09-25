@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/13 20:18:00 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:57:21 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_mechanics(t_game **game)
 void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
-		ft_close(game, 2);
+		ft_close(game, 1, 0);
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_vertical(keydata.key, game))

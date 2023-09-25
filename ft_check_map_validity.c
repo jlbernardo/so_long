@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 18:26:46 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 20:00:16 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	ft_validate_boundary(t_game **game, int x, int y)
 			if ((*game)->map->map[y][x] == 'P')
 			{
 				(*game)->count->player++;
-				(*game)->count->p_init_x = x;
-				(*game)->count->p_init_y = y;
+				(*game)->count->p_init_y = x;
+				(*game)->count->p_init_x = y;
 			}
 			else if ((*game)->map->map[y][x] == 'E')
 				(*game)->count->exit++;
@@ -113,7 +113,8 @@ void	ft_flood(t_game **game, int x, int y)
 {
 	if (x >= 0 && y >= 0 && y < (*game)->map->x && x < (*game)->map->y)
 	{
-		if ((*game)->map->map[x][y] == '1')
+		if ((*game)->map->map[x][y] == '1' || (*game)->map->map[x][y] == 'x' \
+			|| (*game)->map->map[x][y] == 'c' || (*game)->map->map[x][y] == 'e')
 			return ;
 		else if ((*game)->map->map[x][y] == '0')
 			(*game)->map->map[x][y] = 'x';
@@ -130,6 +131,6 @@ void	ft_flood(t_game **game, int x, int y)
 		ft_flood(game, x + 1, y);
 		ft_flood(game, x - 1, y);
 		ft_flood(game, x, y + 1);
-		ft_flood(game, x, y + 1);
+		ft_flood(game, x, y - 1);
 	}
 }

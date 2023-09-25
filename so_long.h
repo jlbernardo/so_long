@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/13 19:35:13 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 13:11:06 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_game
 }				t_game;
 
 void		ft_load(t_game **game);
-void		ft_close(t_game **game);
 void		ft_place_1(t_game **game);
 void		ft_mechanics(t_game **game);
 void		ft_open_window(t_game **game);
@@ -72,6 +71,7 @@ void		ft_check_collection(t_game **game);
 void		ft_flood(t_game **game, int x, int y);
 void		ft_count_lines(char *file, t_game **game);
 void		ft_create_matrix(char *file, t_game **game);
+void		ft_close(t_game **game, int err_code, int i);
 void		ft_hooks(mlx_key_data_t keydata, t_game **game);
 void		ft_place_2(char pos, t_game **game, int x, int y);
 void		ft_check_map_validity(int argc, char *file, t_game **game);

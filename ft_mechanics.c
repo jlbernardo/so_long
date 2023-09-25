@@ -23,10 +23,7 @@ void	ft_mechanics(t_game **game)
 void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
-	{
-		mlx_close_window((*game)->mlx);
-		ft_close(game);
-	}
+		ft_close(game, 2);
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_vertical(keydata.key, game))

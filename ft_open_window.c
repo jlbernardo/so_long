@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/14 14:08:15 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 13:10:41 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	ft_open_window(t_game **game)
 	(*game)->mlx = mlx_init(width, height, "so_long", false);
 	if (!(*game)->mlx)
 	{
-		mlx_strerror(MLX_WINFAIL);
-		exit(MLX_WINFAIL);
+		mlx_close_window((*game)->mlx);
+		ft_close(game, 1, 0);
+		exit(ft_printf("%s.\n", mlx_strerror(MLX_WINFAIL)));
 	}
 	(*game)->assets = ft_calloc(1, sizeof(t_asset));
 	ft_load(game);

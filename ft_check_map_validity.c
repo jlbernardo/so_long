@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 17:56:41 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:07:42 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,11 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 	(*game) = ft_calloc(1, sizeof(t_game));
 	ft_count_lines(file, game);
 	ft_create_matrix(file, game);
-	if ((ft_validate_boundary(game, 0, 0) != 0) || \
-		(*game)->map->x <= 0 || (*game)->map->y <= 0 || \
-		(*game)->count->player != 1 || (*game)->count->collectible < 1 || \
-		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y)
-	{
-		ft_close(game, 2, 0);
-		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
-	}
+	i = ft_validate_boundary(game, 0, 0);
 	ft_flood(game, (*game)->count->p_init_x, (*game)->count->p_init_y);
-	if ((*game)->count->exit != true || \
+	if (i != 0 || (*game)->map->x <= 0 || (*game)->map->y <= 0 || \
+		(*game)->count->player != 1 || (*game)->count->collectible < 1 || \
+		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y || \
 		(*game)->count->collectable != (*game)->count->collectible)
 	{
 		ft_close(game, 2, 0);

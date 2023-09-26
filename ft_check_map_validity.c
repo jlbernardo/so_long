@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/26 15:16:20 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:28:26 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 	int	i;
 
 	if (argc != 2)
-		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
+		exit(ft_message(1));
 	if (!file)
-		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
+		exit(ft_message(2));
 	i = ft_strlen(file);
 	if (ft_strncmp(&file[i - 4], ".ber", 4) != 0)
-		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVEXT)));
+		exit(ft_message(3));
 	(*game) = ft_calloc(1, sizeof(t_game));
 	ft_count_lines(file, game);
 	ft_create_matrix(file, game);
@@ -34,7 +34,7 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 		(*game)->count->collectable != (*game)->count->collectible)
 	{
 		ft_close(game, 2, 0);
-		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));
+		exit(ft_message(4));
 	}
 }
 

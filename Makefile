@@ -10,7 +10,7 @@ FLAGS = $(MLX) -I ./MLX42/include/MLX42/MLX42.h \
 		$(LIBFT) -I ./libft/libft.h -I so_long.h \
 		-ldl -lglfw -pthread -lm
 
-SRC = so_long.c ft_check_map_validity.c ft_open_window.c ft_mechanics.c ft_close.c
+SRC = so_long.c ft_check_map_validity.c ft_open_window.c ft_mechanics.c ft_close.c ft_message.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

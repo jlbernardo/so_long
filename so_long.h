@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 17:00:19 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:22:36 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void		ft_hooks(mlx_key_data_t keydata, t_game **game);
 void		ft_place_2(char pos, t_game **game, int x, int y);
 void		ft_check_map_validity(int argc, char *file, t_game **game);
 void		ft_check_ending(int dino_x, int dino_y, t_game **game);
+int			ft_message(int msg_code);
 int			ft_validate_boundary(t_game **game, int x, int y);
 int			ft_validate_vertical(int direction, t_game **game);
 int			ft_validate_horizontal(int direction, t_game **game);

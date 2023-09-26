@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 20:00:16 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/25 21:23:57 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 	if (i != 0 || (*game)->map->x <= 0 || (*game)->map->y <= 0 || \
 		(*game)->count->player != 1 || (*game)->count->collectible < 1 || \
 		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y || \
-		(*game)->count->collectable != (*game)->count->collectible || \
-		(*game)->map->x > 17 || (*game)->map->y > 9)
+		(*game)->count->collectable != (*game)->count->collectible)
 	{
 		ft_close(game, 2, 0);
 		exit(ft_printf("%s.\n", mlx_strerror(MLX_INVFILE)));

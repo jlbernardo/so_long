@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 21:23:57 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:16:20 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	ft_validate_boundary(t_game **game, int x, int y)
 		{
 			if ((*game)->map->map[y][0] != '1' || (*game)->map->map[0][x] != '1'
 				|| (*game)->map->map[y][(*game)->map->x - 1] != '1' ||
-				(*game)->map->map[(*game)->map->y - 1][x] != '1')
+				(*game)->map->map[(*game)->map->y - 1][x] != '1' || \
+				ft_strchr("10CPE", (*game)->map->map[y][x]) == NULL)
 				return (MLX_INVFILE);
 			if ((*game)->map->map[y][x] == 'P')
 			{

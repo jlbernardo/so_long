@@ -7,16 +7,19 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 
 FLAGS = $(MLX) -I ./MLX42/include/MLX42/MLX42.h \
-		$(LIBFT) -I ./libft/libft.h -I so_long.h \
-		-ldl -lglfw -pthread -lm
+		$(LIBFT) -I ./libft/libft.h -ldl -lglfw -pthread -lm
 
-SRC = so_long.c ft_check_map_validity.c ft_open_window.c ft_mechanics.c ft_close.c ft_message.c
-OBJ = $(SRC:.c=.o)
+M_SRC = $(addprefix mandatory_src/, so_long.c ft_check_map_validity.c ft_open_window.c \
+		ft_mechanics.c ft_close.c ft_message.c)
+B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c \
+		ft_open_window_bonus.c ft_mechanics_bonus.c ft_close_bonus.c ft_message_bonus.c)
+M_OBJ = $(M_SRC:.c=.o)
+B_OBJ = $(B_SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(MLX) $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(FLAGS) -o $(NAME)
+$(NAME): $(MLX) $(LIBFT) $(M_OBJ)
+	$(CC) $(CFLAGS) $(M_OBJ) $(FLAGS) -I ./mandatory_src/so_long.h -o $(NAME)
 
 $(MLX):
 	cmake -S ./MLX42 -B ./MLX42/build
@@ -28,8 +31,12 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+bonus: $(MLX) $(LIBFT) $(B_OBJ)
+	$(CC) $(CFLAGS) $(B_OBJ) $(FLAGS) -I ./bonus_src/so_long_bonus.h -o $(NAME)
+
 clean: libclean
-	rm -f $(OBJ)
+	rm -f $(M_OBJ)
+	rm -f $(B_OBJ)
 
 fclean: clean libfclean
 	rm -f $(NAME)

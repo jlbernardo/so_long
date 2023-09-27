@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:53:45 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/26 20:46:12 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:06:29 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_message(int msg_code)
 		"7) Only acceptable chars: '10PCE'.",
 		"Error!\n\nThe opening of the MLX window failed."
 		" Try running the program again.", "\nYAY, YOU WON! ※\\(^o^)/※\n"
-		"Wanna try again with a different map? Run the program one more time!",
+		"Wanna try again with a different map? Run the program one more time!\n",
 	};
 
 	ft_printf("%s\n", message[msg_code]);

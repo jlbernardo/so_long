@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/26 20:22:36 by julberna         ###   ########.fr       */
+/*   Created: 2023/09/27 15:11:26 by julberna          #+#    #+#             */
+/*   Updated: 2023/09/27 15:11:40 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
-# include "./MLX42/include/MLX42/MLX42.h"
-# include "./libft/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
 
 # define WALL_SIZE 110
 
@@ -31,8 +31,8 @@ typedef struct s_asset
 	mlx_image_t		*portal;
 	mlx_texture_t	*t_background;
 	mlx_image_t		*background;
-	int				i_forest[1024];
-	int				i_diamond[1024];
+	mlx_texture_t	*t_enemy;
+	mlx_image_t		*enemy;
 }				t_asset;
 
 typedef struct s_count

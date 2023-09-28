@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 17:01:41 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:36:06 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 		(dino_x < (portal_x + 120) && dino_y < (portal_y + 120)) \
 		&& (*game)->assets->portal->enabled == true)
 	{
+		ft_printf("\nTotal moves: %s\n", ft_itoa((*game)->moves));
 		ft_message(6);
 		mlx_close_window((*game)->mlx);
 	}

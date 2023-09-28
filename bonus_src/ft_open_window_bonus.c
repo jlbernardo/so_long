@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 16:54:56 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:32:57 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	ft_open_window(t_game **game)
 	}
 	(*game)->assets = ft_calloc(1, sizeof(t_asset));
 	ft_load(game);
+	mlx_image_to_window((*game)->mlx, (*game)->assets->box, (width - 162), 9);
+	(*game)->assets->moves_str = mlx_put_string((*game)->mlx, "Moves: ", \
+							(width - 155), 10);
+	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
+								ft_itoa((*game)->moves), (width - 93), 10);
 }
 
 void	ft_load(t_game **game)
@@ -55,6 +60,9 @@ void	ft_load(t_game **game)
 	(*game)->assets->t_enemy = mlx_load_png("./assets/bat_1.png");
 	(*game)->assets->enemy = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_enemy);
+	(*game)->assets->t_box = mlx_load_png("./assets/bubble.png");
+	(*game)->assets->box = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_box);
 	mlx_set_icon((*game)->mlx, (*game)->assets->logo);
 	mlx_image_to_window((*game)->mlx, (*game)->assets->background, 0, 0);
 	ft_place_1(game);

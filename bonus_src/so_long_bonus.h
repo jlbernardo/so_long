@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:11:26 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 15:11:40 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:29:25 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ typedef struct s_asset
 	mlx_image_t		*background;
 	mlx_texture_t	*t_enemy;
 	mlx_image_t		*enemy;
+	mlx_texture_t	*t_box;
+	mlx_image_t		*box;
+	mlx_image_t		*moves_str;
+	mlx_image_t		*moves_nbr;
 }				t_asset;
 
 typedef struct s_count

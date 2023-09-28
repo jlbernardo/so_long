@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 20:54:46 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:34:16 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_horizontal(keydata.key, game))
 		(*game)->assets->dino->instances->x += 113;
+	(*game)->assets->moves_nbr->instances->enabled = false;
+	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
+	ft_itoa((*game)->moves), (*game)->assets->moves_nbr->instances->x, 10);
 	ft_check_collection(game);
 }
 
@@ -70,7 +73,7 @@ int	ft_validate_horizontal(int direction, t_game **game)
 			return (false);
 		i++;
 	}
-	ft_printf("Moves: %d\n", ++(*game)->moves);
+	(*game)->moves++;
 	return (true);
 }
 
@@ -97,7 +100,7 @@ int	ft_validate_vertical(int direction, t_game **game)
 			return (false);
 		i++;
 	}
-	ft_printf("Moves: %d\n", ++(*game)->moves);
+	(*game)->moves++;
 	return (true);
 }
 

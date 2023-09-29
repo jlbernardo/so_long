@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 15:10:13 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:11:16 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ void	ft_create_matrix(char *file, t_game **game)
 		(*game)->map->map[i][(*game)->map->x] = '\0';
 		i++;
 	}
+	get_next_line(fd);
 	(*game)->count = ft_calloc(1, sizeof(t_count));
 	(*game)->count->player = 0;
 	(*game)->count->exit = 0;
 	(*game)->count->collectible = 0;
+	close(fd);
 }
 
 int	ft_validate_boundary(t_game **game, int x, int y)

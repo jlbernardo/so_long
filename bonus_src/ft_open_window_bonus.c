@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 20:13:20 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:47:55 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_place_1(t_game **game, int32_t width)
 {
 	int	x;
 	int	y;
+	char	*moves;
 
 	x = 0;
 	while (x < (*game)->map->y * WALL_SIZE)
@@ -53,11 +54,13 @@ void	ft_place_1(t_game **game, int32_t width)
 		x += 110;
 	}
 	(*game)->assets->portal->enabled = false;
+	moves = ft_itoa((*game)->moves);
 	mlx_image_to_window((*game)->mlx, (*game)->assets->box, (width - 162), 9);
 	(*game)->assets->moves_str = mlx_put_string((*game)->mlx, "Moves: ", \
 							(width - 155), 10);
 	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
-								ft_itoa((*game)->moves), (width - 93), 10);
+								moves, (width - 93), 10);
+	free(moves);
 }
 
 void	ft_place_2(char pos, t_game **game, int x, int y)

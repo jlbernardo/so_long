@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 16:39:21 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:47:40 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	ft_mechanics(t_game **game)
 
 void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 {
+	char	*nbr;
+
 	if (keydata.key == MLX_KEY_ESCAPE)
 		mlx_close_window((*game)->mlx);
 	if ((*game)->count->playable == false)
@@ -46,8 +48,10 @@ void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 			ft_validate_horizontal(keydata.key, game))
 		ft_walk_dino(game, 'x', 113);
 	(*game)->assets->moves_nbr->instances->enabled = false;
+	nbr = ft_itoa((*game)->moves);
 	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
-	ft_itoa((*game)->moves), (*game)->assets->moves_nbr->instances->x, 10);
+	nbr, (*game)->assets->moves_nbr->instances->x, 10);
+	free(nbr);
 	ft_check_collection(game, 0, -1);
 }
 

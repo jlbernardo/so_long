@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:53:45 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 17:04:46 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:28:04 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_message(int msg_code)
 		"7) Only acceptable chars: '10PCED'.",
 		"Error!\n\nThe opening of the MLX window failed."
 		" Try running the program again.", "\nOh, damn... You lost! (╥﹏╥)\n"
-		"Try running the program again and try to avoid the cute evil bats.\n",
+		"Run the program again and try to avoid the cute evil bats.\n",
 		"\nYAY, YOU WON! ※\\(^o^)/※\n"
 		"Wanna try again with a different map? Run the program one more time!\n",
 	};

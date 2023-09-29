@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 21:10:52 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:39:21 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_mechanics(t_game **game)
 {
+	(*game)->count->playable = true;
 	mlx_loop_hook((*game)->mlx, (void *)ft_animate, game);
 	mlx_key_hook((*game)->mlx, (void *)ft_hooks, (void *)game);
 	mlx_loop((*game)->mlx);
@@ -25,10 +26,9 @@ void	ft_mechanics(t_game **game)
 void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
-	{
 		mlx_close_window((*game)->mlx);
+	if ((*game)->count->playable == false)
 		return ;
-	}
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_vertical(keydata.key, game))
@@ -110,14 +110,17 @@ void	ft_walk_dino(t_game **game, char axis, int pixels)
 	int	i;
 
 	i = -1;
-	if (axis == 'x')
+	if ((*game)->count->playable == true)
 	{
-		while (i++ < 4)
-			(*game)->assets->dino[i]->instances->x += pixels;
-	}
-	else
-	{
-		while (i++ < 4)
-			(*game)->assets->dino[i]->instances->y += pixels;
+		if (axis == 'x')
+		{
+			while (i++ < 4)
+				(*game)->assets->dino[i]->instances->x += pixels;
+		}
+		else
+		{
+			while (i++ < 4)
+				(*game)->assets->dino[i]->instances->y += pixels;
+		}
 	}
 }

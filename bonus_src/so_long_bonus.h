@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:11:26 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 20:52:10 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:13:01 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <signal.h>
 
 # define WALL_SIZE 110
 
@@ -38,6 +39,13 @@ typedef struct s_asset
 	mlx_image_t		*box;
 	mlx_image_t		*moves_str;
 	mlx_image_t		*moves_nbr;
+	mlx_image_t		*end_str;
+	mlx_texture_t	*t_end_bg;
+	mlx_image_t		*end_bg;
+	mlx_texture_t	*t_you_won;
+	mlx_image_t		*you_won;
+	mlx_texture_t	*t_game_over;
+	mlx_image_t		*game_over;
 }				t_asset;
 
 typedef struct s_count
@@ -48,6 +56,7 @@ typedef struct s_count
 	int		p_init_x;
 	int		p_init_y;
 	int		collectable;
+	bool	playable;
 	bool	escapable;
 }				t_count;
 

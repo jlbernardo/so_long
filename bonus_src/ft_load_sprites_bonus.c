@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:45:40 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 20:14:24 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:18:51 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,13 @@ void	ft_load_extra(t_game **game)
 	(*game)->assets->t_box = mlx_load_png("./assets/extra/bubble.png");
 	(*game)->assets->box = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_box);
+	(*game)->assets->t_end_bg = mlx_load_png("./assets/extra/end_bg.png");
+	(*game)->assets->end_bg = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_end_bg);
+	(*game)->assets->t_you_won = mlx_load_png("./assets/extra/you_won.png");
+	(*game)->assets->you_won = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_you_won);
+	(*game)->assets->t_game_over = mlx_load_png("./assets/extra/game_over.png");
+	(*game)->assets->game_over = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_game_over);
 }

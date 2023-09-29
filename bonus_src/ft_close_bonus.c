@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 21:11:24 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:20:46 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,11 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 		if ((dino_x > bat_x && dino_y < bat_y) && \
 			((dino_x + 45) < (bat_x + 77) && (dino_y + 45) > (bat_y + 37)))
 		{
+			(*game)->count->playable = false;
+			mlx_image_to_window((*game)->mlx, (*game)->assets->end_bg, 0, 0);
+			mlx_image_to_window((*game)->mlx, (*game)->assets->game_over, ((*game)->mlx->width / 2) - 110, ((*game)->mlx->height / 2) - 60);
+			(*game)->assets->end_str = mlx_put_string((*game)->mlx, "Press ESC to close", ((*game)->mlx->width / 2) - 89, ((*game)->mlx->height / 2) + 70);
 			ft_message(5);
-			mlx_close_window((*game)->mlx);
 		}
 		i++;
 	}
@@ -112,8 +115,11 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 		(dino_x < (portal_x + 120) && dino_y < (portal_y + 120)) \
 		&& (*game)->assets->portal->enabled == true)
 	{
+		mlx_image_to_window((*game)->mlx, (*game)->assets->end_bg, 0, 0);
+		mlx_image_to_window((*game)->mlx, (*game)->assets->you_won, ((*game)->mlx->width / 2) - 110, ((*game)->mlx->height / 2) - 60);
+		(*game)->assets->end_str = mlx_put_string((*game)->mlx, "Press ESC to close", ((*game)->mlx->width / 2) - 89, ((*game)->mlx->height / 2) + 70);
+		(*game)->count->playable = false;
 		ft_printf("\nTotal moves: %s\n", ft_itoa((*game)->moves));
 		ft_message(6);
-		mlx_close_window((*game)->mlx);
 	}
 }

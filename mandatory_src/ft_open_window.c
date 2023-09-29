@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 15:55:08 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:26:50 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ void	ft_open_window(t_game **game)
 
 void	ft_load(t_game **game)
 {
-	(*game)->assets->logo = mlx_load_png("./assets/logo.png");
-	(*game)->assets->t_forest = mlx_load_png("./assets/forest.png");
+	(*game)->assets->logo = mlx_load_png("./assets/extra/logo.png");
+	(*game)->assets->t_forest = mlx_load_png("./assets/extra/forest.png");
 	(*game)->assets->forest = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_forest);
-	(*game)->assets->t_diamond = mlx_load_png("./assets/diamond.png");
+	(*game)->assets->t_diamond = mlx_load_png("./assets/diamond/5.png");
 	(*game)->assets->diamond = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_diamond);
-	(*game)->assets->t_portal = mlx_load_png("./assets/portal.png");
+	(*game)->assets->t_portal = mlx_load_png("./assets/extra/portal.png");
 	(*game)->assets->portal = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_portal);
 	(*game)->assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
 	(*game)->assets->dino = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_dino);
-	(*game)->assets->t_background = mlx_load_png("./assets/bg.png");
+	(*game)->assets->t_background = mlx_load_png("./assets/extra/bg.png");
 	(*game)->assets->background = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_background);
 	mlx_set_icon((*game)->mlx, (*game)->assets->logo);

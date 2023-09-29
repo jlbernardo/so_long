@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 21:32:57 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:13:20 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,44 +31,11 @@ void	ft_open_window(t_game **game)
 		exit(ft_message(5));
 	}
 	(*game)->assets = ft_calloc(1, sizeof(t_asset));
-	ft_load(game);
-	mlx_image_to_window((*game)->mlx, (*game)->assets->box, (width - 162), 9);
-	(*game)->assets->moves_str = mlx_put_string((*game)->mlx, "Moves: ", \
-							(width - 155), 10);
-	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
-								ft_itoa((*game)->moves), (width - 93), 10);
+	ft_load_sprites(game);
+	ft_place_1(game, width);
 }
 
-void	ft_load(t_game **game)
-{
-	(*game)->assets->logo = mlx_load_png("./assets/logo.png");
-	(*game)->assets->t_forest = mlx_load_png("./assets/forest.png");
-	(*game)->assets->forest = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_forest);
-	(*game)->assets->t_diamond = mlx_load_png("./assets/diamond.png");
-	(*game)->assets->diamond = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_diamond);
-	(*game)->assets->t_portal = mlx_load_png("./assets/portal.png");
-	(*game)->assets->portal = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_portal);
-	(*game)->assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
-	(*game)->assets->dino = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_dino);
-	(*game)->assets->t_background = mlx_load_png("./assets/bg.png");
-	(*game)->assets->background = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_background);
-	(*game)->assets->t_enemy = mlx_load_png("./assets/bat_1.png");
-	(*game)->assets->enemy = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_enemy);
-	(*game)->assets->t_box = mlx_load_png("./assets/bubble.png");
-	(*game)->assets->box = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_box);
-	mlx_set_icon((*game)->mlx, (*game)->assets->logo);
-	mlx_image_to_window((*game)->mlx, (*game)->assets->background, 0, 0);
-	ft_place_1(game);
-}
-
-void	ft_place_1(t_game **game)
+void	ft_place_1(t_game **game, int32_t width)
 {
 	int	x;
 	int	y;
@@ -86,22 +53,51 @@ void	ft_place_1(t_game **game)
 		x += 110;
 	}
 	(*game)->assets->portal->enabled = false;
+	mlx_image_to_window((*game)->mlx, (*game)->assets->box, (width - 162), 9);
+	(*game)->assets->moves_str = mlx_put_string((*game)->mlx, "Moves: ", \
+							(width - 155), 10);
+	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
+								ft_itoa((*game)->moves), (width - 93), 10);
 }
 
 void	ft_place_2(char pos, t_game **game, int x, int y)
 {
+	int	i;
+
+	i = -1;
 	if (pos == '1')
 		mlx_image_to_window((*game)->mlx, (*game)->assets->forest, x, y);
 	else if (pos == 'C' || pos == 'c')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->diamond, \
-							x + 52, y + 60);
+	{
+		while (++i < 6)
+		{
+			mlx_image_to_window((*game)->mlx, (*game)->assets->coin[i], \
+			x + 52, y + 60);
+			if (i > 0)
+				(*game)->assets->coin[i]->enabled = false;
+		}
+	}
 	else if (pos == 'P')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->dino, \
-						x + 45, y + 45);
+	{
+		while (++i < 4)
+		{
+			mlx_image_to_window((*game)->mlx, (*game)->assets->dino[i], \
+			x + 45, y + 45);
+			if (i > 0)
+				(*game)->assets->dino[i]->enabled = false;
+		}
+	}
 	else if (pos == 'E' || pos == 'e')
 		mlx_image_to_window((*game)->mlx, (*game)->assets->portal, \
 						x + 42, y + 25);
 	else if (pos == 'D')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->enemy, \
-						x + 35, y + 50);
+	{
+		while (++i < 2)
+		{
+			mlx_image_to_window((*game)->mlx, (*game)->assets->bat[i], \
+			x + 27, y + 50);
+			if (i > 0)
+				(*game)->assets->bat[i]->enabled = false;
+		}
+	}
 }

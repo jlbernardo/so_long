@@ -11,8 +11,8 @@ FLAGS = $(MLX) -I ./MLX42/include/MLX42/MLX42.h \
 
 M_SRC = $(addprefix mandatory_src/, so_long.c ft_check_map_validity.c ft_open_window.c \
 		ft_mechanics.c ft_close.c ft_message.c)
-B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c \
-		ft_open_window_bonus.c ft_mechanics_bonus.c ft_close_bonus.c ft_message_bonus.c)
+B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c ft_load_sprites.c\
+		ft_open_window_bonus.c ft_mechanics_bonus.c ft_close_bonus.c ft_message_bonus.c ft_animations.c)
 M_OBJ = $(M_SRC:.c=.o)
 B_OBJ = $(B_SRC:.c=.o)
 
@@ -31,7 +31,7 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(MLX) $(LIBFT) $(B_OBJ)
+bonus: $(MLX) $(LIBFT) $(B_OBJ) $(NAME)
 	$(CC) $(CFLAGS) $(B_OBJ) $(FLAGS) -I ./bonus_src/so_long_bonus.h -o $(NAME)
 
 clean: libclean

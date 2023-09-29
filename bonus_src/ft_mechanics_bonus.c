@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 21:34:16 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:10:52 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_mechanics(t_game **game)
 {
+	mlx_loop_hook((*game)->mlx, (void *)ft_animate, game);
 	mlx_key_hook((*game)->mlx, (void *)ft_hooks, (void *)game);
 	mlx_loop((*game)->mlx);
 	ft_close(game, 1, 0);
@@ -31,23 +32,23 @@ void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_vertical(keydata.key, game))
-		(*game)->assets->dino->instances->y -= 110;
+		ft_walk_dino(game, 'y', -110);
 	else if ((keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_vertical(keydata.key, game))
-		(*game)->assets->dino->instances->y += 110;
+		ft_walk_dino(game, 'y', 110);
 	else if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_horizontal(keydata.key, game))
-		(*game)->assets->dino->instances->x -= 113;
+		ft_walk_dino(game, 'x', -113);
 	else if ((keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D) \
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_horizontal(keydata.key, game))
-		(*game)->assets->dino->instances->x += 113;
+		ft_walk_dino(game, 'x', 113);
 	(*game)->assets->moves_nbr->instances->enabled = false;
 	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
 	ft_itoa((*game)->moves), (*game)->assets->moves_nbr->instances->x, 10);
-	ft_check_collection(game);
+	ft_check_collection(game, 0, -1);
 }
 
 int	ft_validate_horizontal(int direction, t_game **game)
@@ -59,11 +60,11 @@ int	ft_validate_horizontal(int direction, t_game **game)
 	int		forest_y;
 
 	i = 0;
-	dino_y = (*game)->assets->dino->instances->y;
+	dino_y = (*game)->assets->dino[0]->instances->y;
 	if (direction == MLX_KEY_LEFT || direction == MLX_KEY_A)
-		dino_x = (*game)->assets->dino->instances->x - 110;
+		dino_x = (*game)->assets->dino[0]->instances->x - 110;
 	else if (direction == MLX_KEY_RIGHT || direction == MLX_KEY_D)
-		dino_x = (*game)->assets->dino->instances->x + 110;
+		dino_x = (*game)->assets->dino[0]->instances->x + 110;
 	while (i < (*game)->assets->forest->count)
 	{
 		forest_x = (*game)->assets->forest->instances[i].x;
@@ -86,11 +87,11 @@ int	ft_validate_vertical(int direction, t_game **game)
 	int		forest_y;
 
 	i = 0;
-	dino_x = (*game)->assets->dino->instances->x;
+	dino_x = (*game)->assets->dino[0]->instances->x;
 	if (direction == MLX_KEY_UP || direction == MLX_KEY_W)
-		dino_y = (*game)->assets->dino->instances->y - 110;
+		dino_y = (*game)->assets->dino[0]->instances->y - 110;
 	else if (direction == MLX_KEY_DOWN || direction == MLX_KEY_S)
-		dino_y = (*game)->assets->dino->instances->y + 110;
+		dino_y = (*game)->assets->dino[0]->instances->y + 110;
 	while (i < (*game)->assets->forest->count)
 	{
 		forest_x = (*game)->assets->forest->instances[i].x;
@@ -104,29 +105,19 @@ int	ft_validate_vertical(int direction, t_game **game)
 	return (true);
 }
 
-void	ft_check_collection(t_game **game)
+void	ft_walk_dino(t_game **game, char axis, int pixels)
 {
-	size_t	i;
-	int		dino_x;
-	int		dino_y;
-	int		diamond_x;
-	int		diamond_y;
+	int	i;
 
-	i = 0;
-	dino_x = (*game)->assets->dino->instances->x;
-	dino_y = (*game)->assets->dino->instances->y;
-	while (i < (*game)->assets->diamond->count)
+	i = -1;
+	if (axis == 'x')
 	{
-		diamond_x = (*game)->assets->diamond->instances[i].x;
-		diamond_y = (*game)->assets->diamond->instances[i].y;
-		if ((diamond_x > dino_x && diamond_y > dino_y) && \
-		(diamond_x < (dino_x + 46) && diamond_y < (dino_y + 46)) \
-		&& (*game)->assets->diamond->instances[i].enabled == true)
-		{
-			(*game)->assets->diamond->instances[i].enabled = false;
-			(*game)->d_collected++;
-		}
-		i++;
+		while (i++ < 4)
+			(*game)->assets->dino[i]->instances->x += pixels;
 	}
-	ft_check_ending(dino_x, dino_y, game);
+	else
+	{
+		while (i++ < 4)
+			(*game)->assets->dino[i]->instances->y += pixels;
+	}
 }

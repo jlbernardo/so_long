@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 21:36:06 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/28 21:11:24 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,62 @@ void	ft_close(t_game **game, int err_code, int i)
 	}
 	if (err_code <= 1)
 	{
+		ft_free_img(game, (*game)->assets->bat, (*game)->assets->t_bat, 2);
+		ft_free_img(game, (*game)->assets->dino, (*game)->assets->t_dino, 4);
+		ft_free_img(game, (*game)->assets->coin, (*game)->assets->t_coin, 6);
 		mlx_delete_image((*game)->mlx, (*game)->assets->background);
 		mlx_delete_image((*game)->mlx, (*game)->assets->forest);
-		mlx_delete_image((*game)->mlx, (*game)->assets->dino);
-		mlx_delete_image((*game)->mlx, (*game)->assets->diamond);
 		mlx_delete_image((*game)->mlx, (*game)->assets->portal);
 		mlx_delete_texture((*game)->assets->t_background);
 		mlx_delete_texture((*game)->assets->t_forest);
-		mlx_delete_texture((*game)->assets->t_dino);
-		mlx_delete_texture((*game)->assets->t_diamond);
 		mlx_delete_texture((*game)->assets->t_portal);
 		mlx_delete_texture((*game)->assets->logo);
 		free((*game)->assets);
 	}
+}
+
+void	ft_free_img(t_game **game, mlx_image_t *img[6], mlx_texture_t *t_img[6], int j)
+{
+	int	i;
+
+	i = 0;
+	while (i < j)
+	{
+		mlx_delete_image((*game)->mlx, img[i]);
+		i++;
+	}
+	i = 0;
+	while (i < j)
+	{
+		mlx_delete_texture(t_img[i]);
+		i++;
+	}
+}
+
+void	ft_check_collection(t_game **game, size_t i, size_t j)
+{
+	int		dino_x;
+	int		dino_y;
+	int		coin_x;
+	int		coin_y;
+
+	dino_x = (*game)->assets->dino[0]->instances->x;
+	dino_y = (*game)->assets->dino[0]->instances->y;
+	while (i < (*game)->assets->coin[0]->count)
+	{
+		coin_x = (*game)->assets->coin[0]->instances[i].x;
+		coin_y = (*game)->assets->coin[0]->instances[i].y;
+		if ((coin_x > dino_x && coin_y > dino_y) && \
+		(coin_x < (dino_x + 46) && coin_y < (dino_y + 46)) \
+		&& (*game)->assets->coin[0]->instances[i].enabled == true)
+		{
+			while (++j < 6)
+				(*game)->assets->coin[j]->instances[i].enabled = false;
+			(*game)->d_collected++;
+		}
+		i++;
+	}
+	ft_check_ending(dino_x, dino_y, game);
 }
 
 void	ft_check_ending(int dino_x, int dino_y, t_game **game)
@@ -51,19 +94,19 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 	i = 0;
 	portal_x = (*game)->assets->portal->instances->x;
 	portal_y = (*game)->assets->portal->instances->y;
-	while (i < (*game)->assets->enemy->count)
+	while (i < (*game)->assets->bat[0]->count)
 	{
-		bat_x = (*game)->assets->enemy->instances[i].x;
-		bat_y = (*game)->assets->enemy->instances[i].y;
+		bat_x = (*game)->assets->bat[0]->instances[i].x;
+		bat_y = (*game)->assets->bat[0]->instances[i].y;
 		if ((dino_x > bat_x && dino_y < bat_y) && \
-			((dino_x + 45) < (bat_x + 60) && (dino_y + 45) > (bat_y + 39)))
+			((dino_x + 45) < (bat_x + 77) && (dino_y + 45) > (bat_y + 37)))
 		{
 			ft_message(5);
 			mlx_close_window((*game)->mlx);
 		}
 		i++;
 	}
-	if ((*game)->d_collected == (*game)->assets->diamond->count)
+	if ((*game)->d_collected == (*game)->assets->coin[0]->count)
 		(*game)->assets->portal->enabled = true;
 	if ((dino_x > portal_x && dino_y > portal_y) && \
 		(dino_x < (portal_x + 120) && dino_y < (portal_y + 120)) \

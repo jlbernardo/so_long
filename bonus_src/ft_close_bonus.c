@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 22:41:21 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:03:33 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	ft_close(t_game **game, int err_code, int i)
 		while (--i >= 0)
 			free((*game)->map->map[i]);
 		free((*game)->map->map);
+		i = (*game)->map->y;
+		while (--i >= 0)
+			free((*game)->map->copy[i]);
+		free((*game)->map->copy);
 		free((*game)->map);
 		free((*game)->count);
 	}
@@ -116,13 +120,17 @@ void	ft_check_ending(int dino_x, int dino_y, t_game **game)
 void	ft_ending(t_game **game, char end, int msg_code)
 {
 	char	*moves;
+	int		i;
 
 	(*game)->count->playable = false;
+	i = -1;
 	mlx_image_to_window((*game)->mlx, (*game)->assets->bgs[1], 0, 0);
 	if (end == 'w')
 	{
 		mlx_image_to_window((*game)->mlx, (*game)->assets->msg[0], \
 		((*game)->mlx->width / 2) - 110, ((*game)->mlx->height / 2) - 60);
+		while (++i < 6)
+			(*game)->assets->dino[i]->instances->z = 1;
 		moves = ft_itoa((*game)->moves);
 		ft_printf("\nTotal moves: %s\n", moves);
 		free(moves);

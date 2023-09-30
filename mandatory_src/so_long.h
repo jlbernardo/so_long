@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/27 14:58:10 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:33:03 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_asset
 	mlx_image_t		*dino;
 	mlx_texture_t	*t_forest;
 	mlx_image_t		*forest;
-	mlx_texture_t	*t_diamond;
-	mlx_image_t		*diamond;
+	mlx_texture_t	*t_coin;
+	mlx_image_t		*coin;
 	mlx_texture_t	*t_portal;
 	mlx_image_t		*portal;
 	mlx_texture_t	*t_background;
@@ -47,6 +47,7 @@ typedef struct s_count
 typedef struct s_map
 {
 	char	**map;
+	char	**copy;
 	int		y;
 	int		x;
 }				t_map;
@@ -68,11 +69,11 @@ void		ft_open_window(t_game **game);
 void		ft_check_collection(t_game **game);
 void		ft_flood(t_game **game, int x, int y);
 void		ft_count_lines(char *file, t_game **game);
-void		ft_create_matrix(char *file, t_game **game);
 void		ft_close(t_game **game, int err_code, int i);
 void		ft_hooks(mlx_key_data_t keydata, t_game **game);
 void		ft_place_2(char pos, t_game **game, int x, int y);
 void		ft_check_map_validity(int argc, char *file, t_game **game);
+void		ft_create_matrix(char *file, t_game **game, int kind, int i);
 void		ft_check_ending(int dino_x, int dino_y, t_game **game);
 int			ft_message(int msg_code);
 int			ft_validate_boundary(t_game **game, int x, int y);

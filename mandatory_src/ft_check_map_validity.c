@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/26 20:28:26 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:15:15 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 		exit(ft_message(3));
 	(*game) = ft_calloc(1, sizeof(t_game));
 	ft_count_lines(file, game);
-	ft_create_matrix(file, game);
+	ft_create_matrix(file, game, 1, 0);
+	ft_create_matrix(file, game, 2, 0);
 	i = ft_validate_boundary(game, 0, 0);
 	ft_flood(game, (*game)->count->p_init_x, (*game)->count->p_init_y);
 	if (i != 0 || (*game)->map->x <= 0 || (*game)->map->y <= 0 || \
@@ -58,26 +59,38 @@ void	ft_count_lines(char *file, t_game **game)
 	}
 	free(string);
 	close(fd);
-}
-
-void	ft_create_matrix(char *file, t_game **game)
-{
-	int	i;
-	int	fd;
-
-	i = 0;
-	fd = open(file, O_RDONLY);
-	(*game)->map->map = ft_calloc((*game)->map->y, sizeof(char *));
-	while (i < (*game)->map->y)
-	{
-		(*game)->map->map[i] = get_next_line(fd);
-		(*game)->map->map[i][(*game)->map->x] = '\0';
-		i++;
-	}
 	(*game)->count = ft_calloc(1, sizeof(t_count));
 	(*game)->count->player = 0;
 	(*game)->count->exit = 0;
 	(*game)->count->collectible = 0;
+}
+
+void	ft_create_matrix(char *file, t_game **game, int kind, int i)
+{
+	const int	fd = open(file, O_RDONLY);
+
+	if (kind == 1)
+	{
+		(*game)->map->map = ft_calloc((*game)->map->y, sizeof(char *));
+		while (i < (*game)->map->y)
+		{
+			(*game)->map->map[i] = get_next_line(fd);
+			(*game)->map->map[i][(*game)->map->x] = '\0';
+			i++;
+		}
+	}
+	else
+	{
+		(*game)->map->copy = ft_calloc((*game)->map->y, sizeof(char *));
+		while (i < (*game)->map->y)
+		{
+			(*game)->map->copy[i] = get_next_line(fd);
+			(*game)->map->copy[i][(*game)->map->x] = '\0';
+			i++;
+		}
+	}
+	get_next_line(fd);
+	close(fd);
 }
 
 int	ft_validate_boundary(t_game **game, int x, int y)
@@ -113,20 +126,20 @@ void	ft_flood(t_game **game, int x, int y)
 {
 	if (x >= 0 && y >= 0 && y < (*game)->map->x && x < (*game)->map->y)
 	{
-		if ((*game)->map->map[x][y] == '1' || (*game)->map->map[x][y] == 'x' \
-			|| (*game)->map->map[x][y] == 'c' || (*game)->map->map[x][y] == 'e')
+		if ((*game)->map->copy[x][y] == '1' || (*game)->map->copy[x][y] == 'x' \
+			|| (*game)->map->copy[x][y] == 'c' || (*game)->map->copy[x][y] == 'e')
 			return ;
-		else if ((*game)->map->map[x][y] == '0')
-			(*game)->map->map[x][y] = 'x';
-		else if ((*game)->map->map[x][y] == 'C')
+		else if ((*game)->map->copy[x][y] == '0')
+			(*game)->map->copy[x][y] = 'x';
+		else if ((*game)->map->copy[x][y] == 'C')
 		{
 			(*game)->count->collectable++;
-			(*game)->map->map[x][y] = 'c';
+			(*game)->map->copy[x][y] = '0';
 		}
-		else if ((*game)->map->map[x][y] == 'E')
+		else if ((*game)->map->copy[x][y] == 'E')
 		{
 			(*game)->count->escapable = true;
-			(*game)->map->map[x][y] = 'e';
+			(*game)->map->copy[x][y] = 'e';
 		}
 		ft_flood(game, x + 1, y);
 		ft_flood(game, x - 1, y);

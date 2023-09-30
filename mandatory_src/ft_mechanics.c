@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/25 20:54:46 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:34:38 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,21 @@ void	ft_check_collection(t_game **game)
 	size_t	i;
 	int		dino_x;
 	int		dino_y;
-	int		diamond_x;
-	int		diamond_y;
+	int		coin_x;
+	int		coin_y;
 
 	i = 0;
 	dino_x = (*game)->assets->dino->instances->x;
 	dino_y = (*game)->assets->dino->instances->y;
-	while (i < (*game)->assets->diamond->count)
+	while (i < (*game)->assets->coin->count)
 	{
-		diamond_x = (*game)->assets->diamond->instances[i].x;
-		diamond_y = (*game)->assets->diamond->instances[i].y;
-		if ((diamond_x > dino_x && diamond_y > dino_y) && \
-		(diamond_x < (dino_x + 46) && diamond_y < (dino_y + 46)) \
-		&& (*game)->assets->diamond->instances[i].enabled == true)
+		coin_x = (*game)->assets->coin->instances[i].x;
+		coin_y = (*game)->assets->coin->instances[i].y;
+		if ((coin_x > dino_x && coin_y > dino_y) && \
+		(coin_x < (dino_x + 46) && coin_y < (dino_y + 46)) \
+		&& (*game)->assets->coin->instances[i].enabled == true)
 		{
-			(*game)->assets->diamond->instances[i].enabled = false;
+			(*game)->assets->coin->instances[i].enabled = false;
 			(*game)->d_collected++;
 		}
 		i++;

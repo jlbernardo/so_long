@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 15:11:26 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 20:23:00 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:13:25 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_count
 typedef struct s_map
 {
 	char	**map;
+	char	**copy;
 	int		y;
 	int		x;
 }				t_map;
@@ -82,7 +83,6 @@ void		ft_load_sprites(t_game **game);
 void		ft_flood(t_game **game, int x, int y);
 void		ft_place_1(t_game **game, int32_t width);
 void		ft_count_lines(char *file, t_game **game);
-void		ft_create_matrix(char *file, t_game **game);
 void		ft_close(t_game **game, int err_code, int i);
 void		ft_hooks(mlx_key_data_t keydata, t_game **game);
 void		ft_ending(t_game **game, char end, int msg_code);
@@ -91,6 +91,7 @@ void		ft_walk_dino(t_game **game, char axis, int pixels);
 void		ft_check_ending(int dino_x, int dino_y, t_game **game);
 void		ft_check_collection(t_game **game, size_t i, size_t j);
 void		ft_check_map_validity(int argc, char *file, t_game **game);
+void		ft_create_matrix(char *file, t_game **game, int kind, int i);
 void		ft_free_img(t_game **game, mlx_image_t *img[6], \
 						mlx_texture_t *t_img[6], int j);
 int			ft_message(int msg_code);

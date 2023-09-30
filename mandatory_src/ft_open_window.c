@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/28 15:26:50 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:36:45 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_load(t_game **game)
 	(*game)->assets->t_forest = mlx_load_png("./assets/extra/forest.png");
 	(*game)->assets->forest = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_forest);
-	(*game)->assets->t_diamond = mlx_load_png("./assets/diamond/5.png");
-	(*game)->assets->diamond = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_diamond);
-	(*game)->assets->t_portal = mlx_load_png("./assets/extra/portal.png");
+	(*game)->assets->t_coin = mlx_load_png("./assets/coin/1.png");
+	(*game)->assets->coin = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_coin);
+	(*game)->assets->t_portal = mlx_load_png("./assets/portal/1.png");
 	(*game)->assets->portal = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_portal);
 	(*game)->assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
@@ -82,7 +82,7 @@ void	ft_place_2(char pos, t_game **game, int x, int y)
 	if (pos == '1')
 		mlx_image_to_window((*game)->mlx, (*game)->assets->forest, x, y);
 	else if (pos == 'C' || pos == 'c')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->diamond, \
+		mlx_image_to_window((*game)->mlx, (*game)->assets->coin, \
 							x + 52, y + 60);
 	else if (pos == 'P')
 		mlx_image_to_window((*game)->mlx, (*game)->assets->dino, \

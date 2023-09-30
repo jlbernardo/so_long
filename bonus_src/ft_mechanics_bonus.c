@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 17:47:40 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 20:49:17 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 			&& keydata.action == MLX_PRESS && \
 			ft_validate_horizontal(keydata.key, game))
 		ft_walk_dino(game, 'x', 113);
-	(*game)->assets->moves_nbr->instances->enabled = false;
+	(*game)->assets->str[1]->instances->enabled = false;
 	nbr = ft_itoa((*game)->moves);
-	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
-	nbr, (*game)->assets->moves_nbr->instances->x, 10);
+	(*game)->assets->str[1] = mlx_put_string((*game)->mlx, \
+	nbr, (*game)->assets->str[1]->instances->x, 10);
 	free(nbr);
 	ft_check_collection(game, 0, -1);
 }

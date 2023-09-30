@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 17:47:55 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/29 22:14:27 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_open_window(t_game **game)
 
 void	ft_place_1(t_game **game, int32_t width)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	char	*moves;
 
 	x = 0;
@@ -53,12 +53,11 @@ void	ft_place_1(t_game **game, int32_t width)
 		}
 		x += 110;
 	}
-	(*game)->assets->portal->enabled = false;
 	moves = ft_itoa((*game)->moves);
-	mlx_image_to_window((*game)->mlx, (*game)->assets->box, (width - 162), 9);
-	(*game)->assets->moves_str = mlx_put_string((*game)->mlx, "Moves: ", \
+	mlx_image_to_window((*game)->mlx, (*game)->assets->bgs[2], (width - 162), 9);
+	(*game)->assets->str[0] = mlx_put_string((*game)->mlx, "Moves: ", \
 							(width - 155), 10);
-	(*game)->assets->moves_nbr = mlx_put_string((*game)->mlx, \
+	(*game)->assets->str[1] = mlx_put_string((*game)->mlx, \
 								moves, (width - 93), 10);
 	free(moves);
 }
@@ -91,8 +90,14 @@ void	ft_place_2(char pos, t_game **game, int x, int y)
 		}
 	}
 	else if (pos == 'E' || pos == 'e')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->portal, \
-						x + 42, y + 25);
+	{
+		while (++i < 8)
+		{
+			mlx_image_to_window((*game)->mlx, (*game)->assets->exit[i], \
+			x + 20, y + 20);
+			(*game)->assets->exit[i]->enabled = false;
+		}
+	}
 	else if (pos == 'D')
 	{
 		while (++i < 2)

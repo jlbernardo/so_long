@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 20:49:17 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:45:46 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	ft_mechanics(t_game **game)
 {
 	(*game)->count->playable = true;
 	mlx_loop_hook((*game)->mlx, (void *)ft_animate, game);
-	mlx_key_hook((*game)->mlx, (void *)ft_hooks, (void *)game);
+	mlx_key_hook((*game)->mlx, (void *)ft_hooks, game);
 	mlx_loop((*game)->mlx);
-	ft_close(game, 1, 0);
+	ft_close(game, 1);
 	mlx_terminate((*game)->mlx);
 	free((*game));
 }
@@ -32,20 +32,16 @@ void	ft_hooks(mlx_key_data_t keydata, t_game **game)
 	if ((*game)->count->playable == false)
 		return ;
 	else if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W) \
-			&& keydata.action == MLX_PRESS && \
-			ft_validate_vertical(keydata.key, game))
+	&& keydata.action == MLX_PRESS && ft_validate_vertical(keydata.key, game))
 		ft_walk_dino(game, 'y', -110);
 	else if ((keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S) \
-			&& keydata.action == MLX_PRESS && \
-			ft_validate_vertical(keydata.key, game))
+	&& keydata.action == MLX_PRESS && ft_validate_vertical(keydata.key, game))
 		ft_walk_dino(game, 'y', 110);
 	else if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A) \
-			&& keydata.action == MLX_PRESS && \
-			ft_validate_horizontal(keydata.key, game))
+	&& keydata.action == MLX_PRESS && ft_validate_horizontal(keydata.key, game))
 		ft_walk_dino(game, 'x', -113);
 	else if ((keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D) \
-			&& keydata.action == MLX_PRESS && \
-			ft_validate_horizontal(keydata.key, game))
+	&& keydata.action == MLX_PRESS && ft_validate_horizontal(keydata.key, game))
 		ft_walk_dino(game, 'x', 113);
 	(*game)->assets->str[1]->instances->enabled = false;
 	nbr = ft_itoa((*game)->moves);
@@ -121,7 +117,7 @@ void	ft_walk_dino(t_game **game, char axis, int pixels)
 			while (i++ < 4)
 				(*game)->assets->dino[i]->instances->x += pixels;
 		}
-		else
+		else if (axis == 'y')
 		{
 			while (i++ < 4)
 				(*game)->assets->dino[i]->instances->y += pixels;

@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:15:15 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:23:25 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_flood(t_game **game, int x, int y)
 	if (x >= 0 && y >= 0 && y < (*game)->map->x && x < (*game)->map->y)
 	{
 		if ((*game)->map->copy[x][y] == '1' || (*game)->map->copy[x][y] == 'x' \
-			|| (*game)->map->copy[x][y] == 'c' || (*game)->map->copy[x][y] == 'e')
+		|| (*game)->map->copy[x][y] == 'c' || (*game)->map->copy[x][y] == 'e')
 			return ;
 		else if ((*game)->map->copy[x][y] == '0')
 			(*game)->map->copy[x][y] = 'x';

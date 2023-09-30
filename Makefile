@@ -1,18 +1,19 @@
 # -*- Makefile -*-
 
 NAME = so_long
-MLX = ./MLX42/build/libmlx42.a
+MLX = ./.MLX42/build/libmlx42.a
 LIBFT = ./libft/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 
-FLAGS = $(MLX) -I ./MLX42/include/MLX42/MLX42.h \
+FLAGS = $(MLX) -I ./.MLX42/include/MLX42/MLX42.h \
 		$(LIBFT) -I ./libft/libft.h -ldl -lglfw -pthread -lm
 
 M_SRC = $(addprefix mandatory_src/, so_long.c ft_check_map_validity.c ft_open_window.c \
 		ft_mechanics.c ft_close.c ft_message.c)
-B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c ft_load_sprites_bonus.c\
-		ft_open_window_bonus.c ft_mechanics_bonus.c ft_close_bonus.c ft_message_bonus.c ft_animations_bonus.c)
+B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c \
+		ft_load_sprites_bonus.c	ft_open_window_bonus.c ft_mechanics_bonus.c \
+		ft_close_bonus.c ft_message_bonus.c ft_animations_bonus.c ft_ending_bonus.c)
 M_OBJ = $(M_SRC:.c=.o)
 B_OBJ = $(B_SRC:.c=.o)
 

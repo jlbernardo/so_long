@@ -6,22 +6,23 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 15:35:33 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:38:48 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 03:04:03 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	ft_free_assets(t_game **game, mlx_image_t *img, mlx_texture_t *t_img);
+
 void	ft_close(t_game **game, int err_code, int i)
 {
 	if (err_code <= 2)
 	{
-		i = (*game)->map->y;
-		while (--i >= 0)
+		while (++i < (*game)->map->y)
+		{
 			free((*game)->map->map[i]);
-		i = (*game)->map->y;
-		while (--i >= 0)
 			free((*game)->map->copy[i]);
+		}
 		free((*game)->map->map);
 		free((*game)->map->copy);
 		free((*game)->map);
@@ -29,19 +30,23 @@ void	ft_close(t_game **game, int err_code, int i)
 	}
 	if (err_code <= 1)
 	{
-		mlx_delete_image((*game)->mlx, (*game)->assets->background);
-		mlx_delete_image((*game)->mlx, (*game)->assets->forest);
-		mlx_delete_image((*game)->mlx, (*game)->assets->dino);
-		mlx_delete_image((*game)->mlx, (*game)->assets->coin);
-		mlx_delete_image((*game)->mlx, (*game)->assets->portal);
-		mlx_delete_texture((*game)->assets->t_background);
-		mlx_delete_texture((*game)->assets->t_forest);
-		mlx_delete_texture((*game)->assets->t_dino);
-		mlx_delete_texture((*game)->assets->t_coin);
-		mlx_delete_texture((*game)->assets->t_portal);
+		ft_free_assets(game, (*game)->assets->background, \
+				(*game)->assets->t_background);
+		ft_free_assets(game, (*game)->assets->forest, \
+				(*game)->assets->t_forest);
+		ft_free_assets(game, (*game)->assets->dino, (*game)->assets->t_dino);
+		ft_free_assets(game, (*game)->assets->coin, (*game)->assets->t_coin);
+		ft_free_assets(game, (*game)->assets->portal, \
+				(*game)->assets->t_portal);
 		mlx_delete_texture((*game)->assets->logo);
 		free((*game)->assets);
 	}
+}
+
+void	ft_free_assets(t_game **game, mlx_image_t *img,	mlx_texture_t *t_img)
+{
+	mlx_delete_image((*game)->mlx, img);
+	mlx_delete_texture(t_img);
 }
 
 void	ft_check_ending(int dino_x, int dino_y, t_game **game)

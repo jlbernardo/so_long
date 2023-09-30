@@ -6,11 +6,13 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:34:13 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 21:53:48 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:56:33 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
+
+void	ft_animate_bat(t_game **game);
 
 void	ft_load_sprites(t_game **game)
 {
@@ -23,8 +25,8 @@ void	ft_load_sprites(t_game **game)
 	mlx_image_to_window((*game)->mlx, (*game)->assets->bgs[0], 0, 0);
 }
 
-void	ft_animate(t_game **game) {
-	int			i;
+void	ft_animate(t_game **game)
+{
 	static int	d;
 	static int	c;
 	static int	p;
@@ -47,11 +49,15 @@ void	ft_animate(t_game **game) {
 		p++;
 		(*game)->assets->exit[p]->enabled = !(*game)->assets->exit[p]->enabled;
 	}
-	i = 0;
-	while (i < 2)
-	{
-		(*game)->assets->bat[i]->enabled = !(*game)->assets->bat[i]->enabled;
-		i++;
-	}
+	ft_animate_bat(game);
 	usleep(120000);
+}
+
+void	ft_animate_bat(t_game **game)
+{
+	int			i;
+
+	i = -1;
+	while (++i < 2)
+		(*game)->assets->bat[i]->enabled = !(*game)->assets->bat[i]->enabled;
 }

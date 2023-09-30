@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:31:19 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:40:09 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y || \
 		(*game)->count->collectable != (*game)->count->collectible)
 	{
-		ft_close(game, 2, 0);
+		ft_close(game, 2);
 		exit(ft_message(3));
 	}
 }
@@ -126,9 +126,9 @@ void	ft_flood(t_game **game, int x, int y)
 {
 	if (x >= 0 && y >= 0 && y < (*game)->map->x && x < (*game)->map->y)
 	{
-		if ((*game)->map->copy[x][y] == '1' || (*game)->map->copy[x][y] == 'x' \
-			|| (*game)->map->copy[x][y] == 'e' || (*game)->map->copy[x][y] == 'B' \
-			|| (*game)->map->copy[x][y] == 'c')
+		if ((*game)->map->copy[x][y] == '1' || (*game)->map->copy[x][y] == 'x'
+		|| (*game)->map->copy[x][y] == 'e' || (*game)->map->copy[x][y] == 'c'
+		|| (*game)->map->copy[x][y] == 'B')
 			return ;
 		else if ((*game)->map->copy[x][y] == '0')
 			(*game)->map->copy[x][y] = 'x';

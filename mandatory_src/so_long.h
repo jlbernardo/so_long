@@ -6,14 +6,14 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 16:35:18 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:33:03 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 03:06:01 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../.MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
 # define WALL_SIZE 110

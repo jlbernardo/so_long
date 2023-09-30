@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:52:12 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 19:10:40 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:25:24 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,23 @@ void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 
 /*printf utils*/
-int	ft_handle_char(va_list args);
-int	ft_handle_int(va_list args);
-int	ft_handle_lower_hex(va_list args);
-int	ft_handle_percent(void);
-int	ft_handle_ptr(va_list args);
-int	ft_handle_str(va_list args);
-int	ft_handle_unsigned_int(va_list args);
-int	ft_handle_upper_hex(va_list args);
-int	ft_handle_space(va_list args, char specifier);
-int	ft_handle_plus(va_list args);
-int	ft_handle_octothorpe(char specifier, va_list args);
+int			ft_handle_char(va_list args);
+int			ft_handle_int(va_list args);
+int			ft_handle_lower_hex(va_list args);
+int			ft_handle_percent(void);
+int			ft_handle_ptr(va_list args);
+int			ft_handle_str(va_list args);
+int			ft_handle_unsigned_int(va_list args);
+int			ft_handle_upper_hex(va_list args);
+int			ft_handle_space(va_list args, char specifier);
+int			ft_handle_plus(va_list args);
+int			ft_handle_octothorpe(char specifier, va_list args);
 
 /*gnl utils*/
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-void	*ft_calloc(size_t nmemb, size_t size);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
+char		*ft_strchr(const char *s, int c);
+char		*ft_strjoin(const char *s1, const char *s2);
+char		*ft_substr(const char *s, unsigned int start, size_t len);
+void		*ft_calloc(size_t nmemb, size_t size);
+size_t		ft_strlcat(char *dest, const char *src, size_t size);
 
 #endif

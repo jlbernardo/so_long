@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:36:45 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 01:24:40 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_open_window(t_game **game)
 		width = 1920;
 	if (height > 1080)
 		height = 1080;
-	(*game)->mlx = mlx_init(width, height, "so_long", false);
+	(*game)->mlx = mlx_init(width, height, "A dino adventure!", false);
 	if (!(*game)->mlx)
 	{
 		mlx_close_window((*game)->mlx);

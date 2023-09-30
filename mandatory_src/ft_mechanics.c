@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:46:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 00:34:38 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 02:58:00 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_mechanics(t_game **game)
 {
 	mlx_key_hook((*game)->mlx, (void *)ft_hooks, (void *)game);
 	mlx_loop((*game)->mlx);
-	ft_close(game, 1, 0);
+	ft_close(game, 1, -1);
 	mlx_terminate((*game)->mlx);
 	free((*game));
 }

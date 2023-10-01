@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 19:30:44 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 02:23:25 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:37:01 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_check_map_validity(int argc, char *file, t_game **game)
 		(*game)->count->exit != 1 || (*game)->map->x == (*game)->map->y || \
 		(*game)->count->collectable != (*game)->count->collectible)
 	{
-		ft_close(game, 2, 0);
+		ft_close(game, 2, -1);
 		exit(ft_message(4));
 	}
 }

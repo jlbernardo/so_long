@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 20:39:03 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 01:24:40 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:49:39 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ void	ft_load(t_game **game)
 	(*game)->assets->t_coin = mlx_load_png("./assets/coin/1.png");
 	(*game)->assets->coin = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_coin);
-	(*game)->assets->t_portal = mlx_load_png("./assets/portal/1.png");
-	(*game)->assets->portal = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_portal);
+	(*game)->assets->t_exit = mlx_load_png("./assets/portal/1.png");
+	(*game)->assets->exit = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_exit);
 	(*game)->assets->t_dino = mlx_load_png("./assets/dino/idle_1.png");
 	(*game)->assets->dino = mlx_texture_to_image((*game)->mlx, \
 						(*game)->assets->t_dino);
-	(*game)->assets->t_background = mlx_load_png("./assets/extra/bg.png");
-	(*game)->assets->background = mlx_texture_to_image((*game)->mlx, \
-						(*game)->assets->t_background);
+	(*game)->assets->t_bg = mlx_load_png("./assets/extra/bg.png");
+	(*game)->assets->bg = mlx_texture_to_image((*game)->mlx, \
+						(*game)->assets->t_bg);
 	mlx_set_icon((*game)->mlx, (*game)->assets->logo);
-	mlx_image_to_window((*game)->mlx, (*game)->assets->background, 0, 0);
+	mlx_image_to_window((*game)->mlx, (*game)->assets->bg, 0, 0);
 	ft_place_1(game);
 }
 
@@ -74,7 +74,7 @@ void	ft_place_1(t_game **game)
 		}
 		x += 110;
 	}
-	(*game)->assets->portal->enabled = false;
+	(*game)->assets->exit->enabled = false;
 }
 
 void	ft_place_2(char pos, t_game **game, int x, int y)
@@ -88,6 +88,6 @@ void	ft_place_2(char pos, t_game **game, int x, int y)
 		mlx_image_to_window((*game)->mlx, (*game)->assets->dino, \
 						x + 45, y + 45);
 	else if (pos == 'E' || pos == 'e')
-		mlx_image_to_window((*game)->mlx, (*game)->assets->portal, \
+		mlx_image_to_window((*game)->mlx, (*game)->assets->exit, \
 						x + 42, y + 25);
 }

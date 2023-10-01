@@ -1,6 +1,7 @@
 # -*- Makefile -*-
 
 NAME = so_long
+NAME_BONUS = so_long_bonus
 MLX = ./.MLX42/build/libmlx42.a
 LIBFT = ./libft/libft.a
 CC = cc
@@ -17,9 +18,11 @@ B_SRC = $(addprefix bonus_src/, so_long_bonus.c ft_check_map_validity_bonus.c \
 M_OBJ = $(M_SRC:.c=.o)
 B_OBJ = $(B_SRC:.c=.o)
 
+CHECK_B = $(shell test -f so_long_bonus && echo "yes" 2>&1)
+
 all: $(NAME)
 
-$(NAME): $(MLX) $(LIBFT) $(M_OBJ)
+$(NAME): $(M_OBJ) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(M_OBJ) $(FLAGS) -I ./mandatory_src/so_long.h -o $(NAME)
 
 $(MLX):
@@ -32,10 +35,12 @@ $(LIBFT):
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(MLX) $(LIBFT) $(B_OBJ)
-	$(CC) $(CFLAGS) $(B_OBJ) $(FLAGS) -I ./bonus_src/so_long_bonus.h -o $(NAME)
+bonus: $(NAME_BONUS)
 
-clean: libclean
+$(NAME_BONUS): $(B_OBJ) $(MLX) $(LIBFT)
+	$(CC) $(CFLAGS) $(B_OBJ) $(FLAGS) -I ./bonus_src/so_long_bonus.h -o $(NAME_BONUS)
+
+clean:
 	rm -f $(M_OBJ)
 	rm -f $(B_OBJ)
 

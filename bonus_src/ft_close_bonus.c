@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 02:30:24 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 02:36:27 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:39:19 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	ft_close(t_game **game, int err_code)
 {
 	if (err_code <= 2)
+	{
 		ft_free_matrix(game);
+		if (err_code == 2)
+			free((*game));
+	}
 	if (err_code <= 1)
 		ft_free_assets(game);
 }
@@ -24,7 +28,7 @@ void	ft_free_matrix(t_game **game)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	while (++i < (*game)->map->y)
 	{
 		free((*game)->map->map[i]);

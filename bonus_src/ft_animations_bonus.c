@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 15:34:13 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/30 02:56:33 by julberna         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:44:55 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_animate(t_game **game)
 		(*game)->assets->exit[p]->enabled = !(*game)->assets->exit[p]->enabled;
 	}
 	ft_animate_bat(game);
-	usleep(120000);
+	usleep(70000);
 }
 
 void	ft_animate_bat(t_game **game)

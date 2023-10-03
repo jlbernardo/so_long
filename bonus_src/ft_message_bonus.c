@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 14:53:45 by julberna          #+#    #+#             */
-/*   Updated: 2023/09/29 17:28:04 by julberna         ###   ########.fr       */
+/*   Updated: 2023/10/03 15:27:26 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_message(int msg_code)
 		"4) Closed outside walls (map surrounded by 1's);\n"
 		"5) Rectangular format - it can't be a square, sorry;\n"
 		"6) A valid path, so the player can access everything;\n"
-		"7) Only acceptable chars: '10PCED'.",
+		"7) Only acceptable chars: '10PCEB'.",
 		"Error!\n\nThe opening of the MLX window failed."
 		" Try running the program again.", "\nOh, damn... You lost! (╥﹏╥)\n"
 		"Run the program again and try to avoid the cute evil bats.\n",

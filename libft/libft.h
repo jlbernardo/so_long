@@ -6,7 +6,7 @@
 /*   By: julberna <julberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 14:52:12 by julberna          #+#    #+#             */
-/*   Updated: 2023/10/25 16:44:17 by julberna         ###   ########.fr       */
+/*   Updated: 2023/10/26 20:19:11 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,8 @@ char			*ft_strjoin(const char *s1, const char *s2);
 char			*ft_substr(const char *s, unsigned int start, size_t len);
 void			*ft_calloc(size_t nmemb, size_t size);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
+
+/*extra*/
+int				ft_wordcount(char *s, char c);
 
 #endif

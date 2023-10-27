@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julberna <julberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 09:39:12 by julberna          #+#    #+#             */
-/*   Updated: 2023/06/22 09:44:48 by julberna         ###   ########.fr       */
+/*   Updated: 2023/10/27 01:59:23 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ static char	*ft_get_leftover(char *str)
 	j = i;
 	while (str[j] != '\0')
 		j++;
-	rest = ft_substr(str, i, j);
+	if (j != i)
+		rest = ft_substr(str, i, j);
 	return (rest);
 }

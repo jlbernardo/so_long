@@ -6,13 +6,13 @@
 /*   By: julberna <julberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:10:58 by julberna          #+#    #+#             */
-/*   Updated: 2023/05/28 02:48:38 by julberna         ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:42 by julberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_wordcount(char *s, char c)
+int	ft_wordcount(char *s, char c)
 {
 	int	i;
 	int	words;
